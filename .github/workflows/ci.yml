@@ -109,3 +109,106 @@ jobs:
           git diff --exit-code go.mod go.sum
       - name: Run go vet
         run: go vet ./...
+
+  release:
+    name: Publish Release
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs:
+      - lint
+      - security
+      - test
+      - build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: release-main
+      cancel-in-progress: false
+    env:
+      MODULE_PATH: github.com/hashgraph-online/standards-sdk-go
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine release tag
+        id: release_tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --tags --force
+
+          existing_tag="$(git tag --points-at "${GITHUB_SHA}" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1 || true)"
+          if [ -n "${existing_tag}" ]; then
+            echo "tag=${existing_tag}" >> "${GITHUB_OUTPUT}"
+            echo "created=false" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+
+          latest_tag="$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | head -n1)"
+          if [ -z "${latest_tag}" ]; then
+            latest_tag="v0.0.0"
+          fi
+
+          version_without_v="${latest_tag#v}"
+          IFS='.' read -r major minor patch <<< "${version_without_v}"
+          next_tag="v${major}.${minor}.$((patch + 1))"
+
+          echo "tag=${next_tag}" >> "${GITHUB_OUTPUT}"
+          echo "created=true" >> "${GITHUB_OUTPUT}"
+
+      - name: Create git tag and GitHub release
+        if: steps.release_tag.outputs.created == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${{ steps.release_tag.outputs.tag }}"
+          git tag "${tag}" "${GITHUB_SHA}"
+          git push origin "${tag}"
+          gh release create "${tag}" \
+            --title "${tag}" \
+            --generate-notes \
+            --target "${GITHUB_SHA}"
+
+      - name: Wait for pkg.go.dev index
+        env:
+          RELEASE_TAG: ${{ steps.release_tag.outputs.tag }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os
+          import sys
+          import time
+          import urllib.error
+          import urllib.request
+
+          module_path = os.environ["MODULE_PATH"]
+          release_tag = os.environ["RELEASE_TAG"]
+          url = f"https://pkg.go.dev/{module_path}@{release_tag}"
+
+          attempts = 40
+          delay_seconds = 15
+          timeout_seconds = 20
+
+          print(f"Polling {url} for {release_tag}")
+          for attempt in range(1, attempts + 1):
+              try:
+                  with urllib.request.urlopen(url, timeout=timeout_seconds) as response:
+                      body = response.read().decode("utf-8", "ignore")
+                      ok = response.status == 200 and release_tag in body
+                      print(f"attempt {attempt:02d}: status={response.status} indexed={ok}")
+                      if ok:
+                          sys.exit(0)
+              except urllib.error.HTTPError as error:
+                  print(f"attempt {attempt:02d}: status={error.code} indexed=False")
+              except Exception as error:
+                  print(f"attempt {attempt:02d}: error={error} indexed=False")
+
+              time.sleep(delay_seconds)
+
+          raise SystemExit(
+              f"Timed out waiting for pkg.go.dev to index {module_path}@{release_tag}"
+          )
+          PY

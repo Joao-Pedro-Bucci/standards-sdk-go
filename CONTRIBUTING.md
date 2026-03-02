@@ -44,6 +44,15 @@ For integration tests, configure required environment values locally and run the
 - [ ] PR description explains purpose and scope
 - [ ] Commits are signed off (DCO)
 
+## Release Process
+
+Releases are automated from CI on every successful push to `main`:
+
+1. CI determines the next patch tag (`vX.Y.Z`).
+2. CI creates and pushes the tag to GitHub.
+3. CI creates a GitHub Release with generated notes.
+4. CI polls `pkg.go.dev` until the tagged module version is indexed.
+
 ## Commit and PR Conventions
 
 Use Conventional Commits:
